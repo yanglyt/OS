@@ -9,7 +9,23 @@ struct ret_info syscall(uint64_t syscall_num, uint64_t arg0, uint64_t arg1, uint
     // TODO: implement syscall function
     struct ret_info ret;
     switch (syscall_num) {
-    
+    case SYS_WRITE:
+    {   
+        int fd = arg0,count = arg2;
+        char * buf = (char *)arg1;
+        if(fd == 1){
+            for(int i = 0; i < count; i++) {
+                putchar(buf[i]);
+            }
+            ret.a0 = count;
+        }
+        break;
+    }
+    case SYS_GETPID:
+    {
+        ret.a0 = getpid();
+        break;
+    }
     default:
         printf("Unknown syscall! syscall_num = %d\n", syscall_num);
         while(1);
